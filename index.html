@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day&Night Cafe | Artisan Coffee, Kitchen & Twilight Lounge</title>
+  <meta name="description" content="Experience Day&Night Cafe — where morning sunshine meets midnight magic. Specialty artisan brews, fresh bakery, signature night sips and gourmet bites.">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase Official JS SDK CDN (v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Ambient Glowing Background Blurs -->
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <!-- =========================================================
+       NAVIGATION BAR
+       ========================================================= -->
+  <header class="navbar">
+    <div class="brand-container">
+      <div class="brand-logo-icon">
+        <i class="fa-solid fa-cloud-sun"></i>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Day&Night Cafe</span>
+        <span class="brand-sub">Brew & Lounge</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#vibe">Atmospheres</a></li>
+      <li><a href="#menu">Our Menu</a></li>
+      <li><a href="#reservation">Reserve Table</a></li>
+      <li><a href="#about">Story</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <!-- Supabase Backend Status Pill -->
+      <button class="supabase-pill" id="supabasePill" title="Click to view or edit Supabase Backend Settings">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Demo Mode</span>
+        <i class="fa-solid fa-database" style="font-size: 0.75rem; opacity: 0.7;"></i>
+      </button>
+
+      <!-- Day/Night Atmosphere Switcher -->
+      <button class="theme-switch-btn" id="themeSwitchBtn" title="Switch between Day and Night ambience">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+        <span id="themeLabel">Night Mode</span>
+      </button>
+
+      <!-- Cart Button -->
+      <button class="cart-btn" id="cartBtn" title="View Order List">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-count" id="cartBadge" style="display: none;">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       HERO SECTION
+       ========================================================= -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <i class="fa-solid fa-sparkles"></i>
+        <span>Artisanal Specialty Coffee & Late-Night Bites</span>
+      </div>
+      <h1 class="hero-title">
+        Where <span class="accent-day">Morning Sunshine</span> Meets <span class="accent-night">Midnight Magic</span>.
+      </h1>
+      <p class="hero-desc">
+        Day&Night Cafe creates an enchanting duality. Enjoy slow-crafted single origin espresso and freshly baked croissants by daylight, then unwind with botanical twilight mocktails and gourmet truffle bites under the evening stars.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#menu" class="btn-primary">
+          <i class="fa-solid fa-utensils"></i> Explore Full Menu
+        </a>
+        <a href="#reservation" class="btn-secondary">
+          <i class="fa-solid fa-calendar-check"></i> Book a Table
+        </a>
+        <button class="btn-secondary" id="openSupabaseSettingsBtn" style="border-style: dashed;">
+          <i class="fa-solid fa-gear"></i> Supabase Setup
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Showcase Card -->
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="hero-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80" alt="Day&Night Cafe aesthetic atmosphere" id="heroImage">
+        </div>
+        <div class="hero-floating-badge">
+          <div>
+            <div class="floating-badge-title">Now Serving Fresh Brews</div>
+            <div class="floating-badge-time">OPEN 7:00 AM – 2:00 AM DAILY</div>
+          </div>
+          <div style="font-size: 1.5rem; color: var(--gold-primary);">
+            <i class="fa-solid fa-mug-saucer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       DAY & NIGHT EXPERIENCE SPLIT
+       ========================================================= -->
+  <section class="vibe-split" id="vibe">
+    <div class="vibe-grid">
+      <!-- Day Mood Card -->
+      <div class="vibe-card day-card">
+        <span class="vibe-badge">☀️ The Day Shift • 7:00 AM - 5:00 PM</span>
+        <h3>Sunlit Coffee & Artisan Bakery</h3>
+        <p>Bask in warm natural sunlight, soft indie tunes, and the aroma of freshly roasted beans. The ideal space for morning focus, creative work, and relaxing brunch dates.</p>
+        <ul class="vibe-features">
+          <li><span>✦</span> Single-origin Ethiopian and Colombian roasts</li>
+          <li><span>✦</span> Handcrafted laminated pastries & French croissants</li>
+          <li><span>✦</span> High-speed fiber WiFi & quiet work nooks</li>
+          <li><span>✦</span> Nourishing avocado tartines and brunch platters</li>
+        </ul>
+      </div>
+
+      <!-- Night Mood Card -->
+      <div class="vibe-card night-card">
+        <span class="vibe-badge">🌙 The Night Shift • 5:00 PM - 2:00 AM</span>
+        <h3>Twilight Lounge & Culinary Bites</h3>
+        <p>As the dusk falls, Day&Night transforms with ambient amber candlelight, chill low-fi jazz, and a sophisticated evening menu for late-night conversations and gatherings.</p>
+        <ul class="vibe-features">
+          <li><span>✦</span> Signature smoked botanical mocktails & iced coolers</li>
+          <li><span>✦</span> Wood-fired truffle flatbreads & Wagyu-style sliders</li>
+          <li><span>✦</span> Molten chocolate lava cakes & artisanal desserts</li>
+          <li><span>✦</span> Acoustic vinyl nights and intimate cozy seating</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       AESTHETIC MENU SECTION (SUPABASE CONNECTED)
+       ========================================================= -->
+  <section class="menu-section" id="menu">
+    <div class="section-header">
+      <div class="section-subtitle">Our Handcrafted Selection</div>
+      <h2 class="section-title">The Day&Night Menu</h2>
+      <p class="section-desc">
+        Every item is curated with premium organic ingredients. Synced in real-time with your Supabase database backend.
+      </p>
+    </div>
+
+    <!-- Menu Controls & Filters -->
+    <div class="menu-controls">
+      <div class="filter-categories">
+        <button class="filter-pill active" data-category="all">All Items</button>
+        <button class="filter-pill" data-category="coffee"><i class="fa-solid fa-mug-hot"></i> Coffee</button>
+        <button class="filter-pill" data-category="bakery"><i class="fa-solid fa-bread-slice"></i> Bakery</button>
+        <button class="filter-pill" data-category="night_sips"><i class="fa-solid fa-martini-glass-citrus"></i> Night Sips</button>
+        <button class="filter-pill" data-category="bites"><i class="fa-solid fa-pizza-slice"></i> Bites</button>
+        <button class="filter-pill" data-category="dessert"><i class="fa-solid fa-cake-candles"></i> Desserts</button>
+      </div>
+
+      <div class="menu-actions-bar">
+        <div class="menu-search-box">
+          <i class="fa-solid fa-magnifying-glass" style="color: var(--text-subtle);"></i>
+          <input type="text" id="menuSearchInput" placeholder="Search coffee, pastries, drinks...">
+        </div>
+
+        <!-- Add Item Trigger -->
+        <button class="btn-add-item" id="addItemBtn">
+          <i class="fa-solid fa-plus-circle"></i> Add New Item
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu Items Grid (Filled via JS / Supabase) -->
+    <div class="menu-grid" id="menuGrid">
+      <!-- Dynamically rendered -->
+    </div>
+  </section>
+
+  <!-- =========================================================
+       RESERVATION SECTION
+       ========================================================= -->
+  <section class="reservation-section" id="reservation">
+    <div class="reservation-box">
+      <div class="reservation-grid">
+        <div class="res-info">
+          <span class="vibe-badge" style="background: rgba(212,175,55,0.15); color: var(--gold-primary);">Reserve Your Table</span>
+          <h2>An Unforgettable Day or Night Experience</h2>
+          <p>
+            Planning a morning business catch-up, an afternoon study session, or a romantic late-night dessert date? Reserve your spot in advance and let us prepare your welcoming table.
+          </p>
+
+          <ul class="res-perks">
+            <li><i class="fa-solid fa-circle-check" style="color: var(--gold-primary);"></i> Instant confirmation directly in Supabase database</li>
+            <li><i class="fa-solid fa-circle-check" style="color: var(--gold-primary);"></i> Choice of Day Sunlit Window or Cozy Night Lounge seating</li>
+            <li><i class="fa-solid fa-circle-check" style="color: var(--gold-primary);"></i> Special requests accommodated for birthdays & anniversaries</li>
+          </ul>
+        </div>
+
+        <form class="reservation-form" id="reservationForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="resName">Your Full Name *</label>
+              <input type="text" id="resName" placeholder="e.g. Ayesha Khan" required>
+            </div>
+
+            <div class="form-group">
+              <label for="resPhone">Phone Number *</label>
+              <input type="tel" id="resPhone" placeholder="e.g. +92 300 1234567" required>
+            </div>
+
+            <div class="form-group">
+              <label for="resEmail">Email Address</label>
+              <input type="email" id="resEmail" placeholder="ayesha@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="resGuests">Number of Guests *</label>
+              <select id="resGuests" required>
+                <option value="1">1 Person (Solo Coffee/Work)</option>
+                <option value="2" selected>2 Persons (Cozy Date)</option>
+                <option value="3">3 Persons</option>
+                <option value="4">4 Persons (Friends/Family)</option>
+                <option value="6">6+ Persons (Party/Meeting)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="resDate">Reservation Date *</label>
+              <input type="date" id="resDate" required>
+            </div>
+
+            <div class="form-group">
+              <label for="resTime">Preferred Time Slot *</label>
+              <select id="resTime" required>
+                <option value="08:00 AM">08:00 AM - Morning Espresso</option>
+                <option value="11:30 AM">11:30 AM - Brunch & Pastries</option>
+                <option value="03:00 PM">03:00 PM - Afternoon Tea</option>
+                <option value="06:30 PM">06:30 PM - Sunset Bites</option>
+                <option value="09:00 PM">09:00 PM - Twilight Lounge</option>
+                <option value="11:30 PM">11:30 PM - Late Night Desserts</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="resMood">Preferred Ambience Vibe</label>
+              <select id="resMood">
+                <option value="day_sunshine">☀️ Sunlit Window (Bright & Energizing)</option>
+                <option value="night_lounge" selected>🌙 Dim-lit Velvet Lounge (Intimate & Relaxed)</option>
+                <option value="outdoor">🌿 Outdoor Patio Under Fairy Lights</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="resNotes">Special Requests (Optional)</label>
+              <textarea id="resNotes" rows="2" placeholder="e.g. Corner table preferred, celebration setup, dietary allergies..."></textarea>
+            </div>
+
+            <div class="form-group full-width" style="margin-top: 0.5rem;">
+              <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                <i class="fa-solid fa-calendar-check"></i> Confirm Reservation
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="footer" id="about">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-container" style="margin-bottom: 0.8rem;">
+          <div class="brand-logo-icon">
+            <i class="fa-solid fa-cloud-sun"></i>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Day&Night Cafe</span>
+            <span class="brand-sub">Brew & Lounge</span>
+          </div>
+        </div>
+        <p>A continuous celebration of caffeine by day and culinary serenity by night. Every cup and plate is crafted with mindful artistry.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Operating Hours</h4>
+        <ul>
+          <li><strong>Day Service:</strong> 7:00 AM – 5:00 PM</li>
+          <li><strong>Twilight Transition:</strong> 5:00 PM – 6:00 PM</li>
+          <li><strong>Night Lounge:</strong> 6:00 PM – 2:00 AM</li>
+          <li><strong>Weekend Special:</strong> Open till 3:00 AM</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#vibe">Day & Night Vibes</a></li>
+          <li><a href="#menu">Our Menu</a></li>
+          <li><a href="#reservation">Table Reservation</a></li>
+          <li><a href="javascript:void(0)" onclick="document.getElementById('supabaseModal').classList.add('active')">Supabase Backend Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect & Location</h4>
+        <ul>
+          <li><i class="fa-solid fa-location-dot" style="color: var(--gold-primary);"></i> 42 Blossom Avenue, Cafe Boulevard</li>
+          <li><i class="fa-solid fa-phone" style="color: var(--gold-primary);"></i> +92 (051) 8899000</li>
+          <li><i class="fa-solid fa-envelope" style="color: var(--gold-primary);"></i> hello@daynightcafe.com</li>
+          <li style="display: flex; gap: 1rem; margin-top: 0.8rem; font-size: 1.2rem;">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>&copy; 2026 Day&Night Cafe. Handcrafted with passion. All rights reserved.</div>
+      <div>Designed with HTML, CSS & Supabase Backend.</div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       CART DRAWER
+       ========================================================= -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3 class="cart-title"><i class="fa-solid fa-bag-shopping" style="color: var(--gold-primary);"></i> Your Order Cart</h3>
+      <button class="btn-close" id="closeCartBtn">&times;</button>
+    </div>
+
+    <div class="cart-items-list" id="cartItemsList">
+      <!-- Items will render here -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Subtotal</span>
+        <span class="cart-total-amount" id="cartTotalAmount">Rs. 0</span>
+      </div>
+      <button class="btn-primary" id="checkoutBtn" style="width: 100%; justify-content: center;">
+        <i class="fa-solid fa-check"></i> Place Cafe Order
+      </button>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       MODAL: ADD NEW MENU ITEM
+       ========================================================= -->
+  <div class="modal-overlay" id="addItemModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-plus-circle" style="color: var(--gold-primary);"></i> Add Menu Item (Supabase)</h3>
+        <button class="btn-close" id="closeAddItemModalBtn">&times;</button>
+      </div>
+
+      <form id="addItemForm">
+        <div class="modal-body">
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            Naya item add karein. Agar aapka Supabase backend connect hai toh ye foran database mein store ho kar live display hoga!
+          </p>
+
+          <div class="form-group">
+            <label for="newItemName">Item Name *</label>
+            <input type="text" id="newItemName" placeholder="e.g. Hazelnut Velvet Macchiato" required>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="newItemCategory">Category *</label>
+              <select id="newItemCategory" required>
+                <option value="coffee">Specialty Coffee</option>
+                <option value="bakery">Artisan Bakery</option>
+                <option value="night_sips">Night Sips & Mocktails</option>
+                <option value="bites">Gourmet Bites</option>
+                <option value="dessert">Sweet Cravings</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="newItemMood">Atmosphere / Mood *</label>
+              <select id="newItemMood" required>
+                <option value="both">Day & Night (Both)</option>
+                <option value="day">☀️ Day Mood (Morning/Afternoon)</option>
+                <option value="night">🌙 Night Mood (Evening/Late Night)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="newItemPrice">Price (PKR Rs.) *</label>
+              <input type="number" id="newItemPrice" placeholder="e.g. 650" min="0" step="10" required>
+            </div>
+
+            <div class="form-group">
+              <label for="newItemRating">Rating (1.0 to 5.0)</label>
+              <input type="number" id="newItemRating" placeholder="4.9" min="1" max="5" step="0.1" value="4.9">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="newItemImage">Image URL</label>
+            <input type="url" id="newItemImage" placeholder="https://images.unsplash.com/photo-...">
+            <span style="font-size: 0.75rem; color: var(--text-subtle);">Unsplash ya koi bhi image link daalein (khali chorne pr default aesthetic image lag jaye gi).</span>
+          </div>
+
+          <div class="form-group">
+            <label for="newItemDesc">Description</label>
+            <textarea id="newItemDesc" rows="3" placeholder="Artisan taste notes, ingredients, and craft details..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="document.getElementById('addItemModal').classList.remove('active')">Cancel</button>
+          <button type="submit" class="btn-primary"><i class="fa-solid fa-save"></i> Save & Add to Menu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL: SUPABASE BACKEND CONFIGURATION
+       ========================================================= -->
+  <div class="modal-overlay" id="supabaseModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-database" style="color: var(--gold-primary);"></i> Supabase Backend Connection</h3>
+        <button class="btn-close" id="closeSupabaseModalBtn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="background: rgba(212,175,55,0.08); border-left: 3px solid var(--gold-primary); padding: 0.9rem; border-radius: var(--border-radius-sm); font-size: 0.88rem; color: var(--text-main);">
+          <strong>💡 Asaan Tareeqa:</strong> Supabase pr free account banayein, apna project create karein aur neechay Project URL aur Anon Key paste karein!
+        </div>
+
+        <div class="form-group">
+          <label for="supabaseUrlInput">Supabase Project URL</label>
+          <input type="url" id="supabaseUrlInput" placeholder="https://your-project.supabase.co">
+          <span style="font-size: 0.75rem; color: var(--text-subtle);">Supabase Dashboard ➔ Project Settings ➔ API ➔ Project URL</span>
+        </div>
+
+        <div class="form-group">
+          <label for="supabaseKeyInput">Supabase Anon Public API Key</label>
+          <input type="password" id="supabaseKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+          <span style="font-size: 0.75rem; color: var(--text-subtle);">Supabase Dashboard ➔ Project Settings ➔ API ➔ Project API keys (anon public)</span>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+          <button type="button" class="btn-secondary" id="testSupabaseBtn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+            <i class="fa-solid fa-plug-circle-bolt"></i> Test Connection
+          </button>
+          <span id="testStatusMsg" style="font-size: 0.85rem; font-weight: 500;"></span>
+        </div>
+
+        <div style="margin-top: 1rem; border-top: 1px solid var(--border-glass); padding-top: 1rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <label style="font-size: 0.82rem; font-weight: 600; text-transform: uppercase; color: var(--gold-primary);">
+              SQL Schema for Supabase Tables
+            </label>
+            <button type="button" class="btn-secondary" id="copySqlBtn" style="padding: 0.35rem 0.8rem; font-size: 0.78rem;">
+              <i class="fa-solid fa-copy"></i> Copy SQL
+            </button>
+          </div>
+          <div class="code-box">
+            -- Create menu_items and reservations tables in Supabase SQL Editor:<br>
+            CREATE TABLE public.menu_items (...);<br>
+            CREATE TABLE public.reservations (...);<br>
+            (Click 'Copy SQL' button for ready-to-run script)
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="document.getElementById('supabaseModal').classList.remove('active')">Close</button>
+        <button type="button" class="btn-primary" id="saveSupabaseConfigBtn"><i class="fa-solid fa-check"></i> Save & Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="supabase-client.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
